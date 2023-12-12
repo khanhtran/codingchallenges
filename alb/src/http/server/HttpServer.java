@@ -4,7 +4,6 @@ import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Date;
-import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -18,10 +17,8 @@ public class HttpServer {
     public HttpServer(int port) throws IOException {
         try (ServerSocket serverSocket = new ServerSocket(port)) {
             while (true) {
-                try (Socket client = serverSocket.accept()) {
-//                    executorService.submit(() -> handleClient(client));
-                    new Thread(() -> handleClient(client)).start();
-                }
+                Socket client = serverSocket.accept();
+                executorService.submit(() -> handleClient(client));
             }
         }
     }
