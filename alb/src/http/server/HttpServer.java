@@ -13,9 +13,7 @@ public class HttpServer {
 
     private String name;
 
-    public static void main(String[] args) throws IOException {
-        new HttpServer(80, "LB");
-    }
+
     public HttpServer(int port, String name) throws IOException {
         this.name = name;
         try (ServerSocket serverSocket = new ServerSocket(port)) {
