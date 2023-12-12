@@ -11,11 +11,15 @@ public class HttpServer {
 
     private ExecutorService executorService = Executors.newFixedThreadPool(100);
 
+    private String name;
+
     public static void main(String[] args) throws IOException {
-        new HttpServer(80);
+        new HttpServer(80, "LB");
     }
-    public HttpServer(int port) throws IOException {
+    public HttpServer(int port, String name) throws IOException {
+        this.name = name;
         try (ServerSocket serverSocket = new ServerSocket(port)) {
+            System.out.println(this.name + " started at " + port);
             while (true) {
                 Socket client = serverSocket.accept();
                 executorService.submit(() -> handleClient(client));
@@ -23,7 +27,7 @@ public class HttpServer {
         }
     }
 
-    private static void handleClient(Socket client) {
+    private void handleClient(Socket client) {
         try {
             BufferedReader br = new BufferedReader(new InputStreamReader(client.getInputStream()));
 
@@ -36,7 +40,7 @@ public class HttpServer {
             String request = requestBuilder.toString();
             System.out.println(request);
 
-            sendResponse(client, "response".getBytes());
+            sendResponse(client, ("Response from " + this.name).getBytes());
 
             client.close();
         } catch (IOException e) {
