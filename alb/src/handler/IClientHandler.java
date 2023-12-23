@@ -1,9 +1,9 @@
-package http.server;
+package handler;
 
 import java.io.IOException;
 import java.net.Socket;
 
-public interface ClientHandler {
+public interface IClientHandler {
 
     void handleClient(Socket client) throws IOException;
 }
