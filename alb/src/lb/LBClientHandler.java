@@ -11,15 +11,20 @@ import java.net.Socket;
  */
 public class LBClientHandler implements IClientHandler {
 
+    private String delegate;
+
+    public LBClientHandler (String delegate) {
+        this.delegate = delegate;
+    }
 
     @Override
     public void handleClient(Socket client) throws IOException {
         String requestMessage = Utils.readRequest(client.getInputStream());
+        System.out.println(requestMessage);
+        System.out.println("Forwarding request to " + delegate);
 
-//        System.out.println(requestMessage);
-//        System.out.println("Generating response...");
-//        Utils.writeOKResponse(client.getOutputStream(), "Hello from BE");
-//        System.out.println("End.");
+        System.out.println("Reading response from " + delegate);
+
 
         client.close();
     }

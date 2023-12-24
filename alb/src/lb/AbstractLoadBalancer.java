@@ -1,13 +1,13 @@
 package lb;
 
+import server.IServer;
+
 import java.util.List;
 
-public abstract class AbstractLoadBalancer {
-
+public abstract class AbstractLoadBalancer implements ILoadBalancer, IServer {
     protected List<String> backends;
+    protected int port;
 
-    public void LoadBalancer(List<String> backends) {
-        this.backends = backends;
-    }
+    @Override
     public abstract String chooseBackend();
 }
